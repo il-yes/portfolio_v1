@@ -30,9 +30,10 @@ class Xprience
     private $images;
 
 
-    public function __construct($description, $technology, $language, $images)
+    public function __construct($name, $description, $technology, $language)
     {
         $this->id          = new XprienceId();
+        $this->name        = $name;
         $this->description = $description;
         $this->techno      = $technology;
         $this->language    = $language;

@@ -12,6 +12,9 @@ namespace AppBundle\Ui\Controller;
 use AppBundle\Ui\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Application\UseCase\Experience\CreateXpService;
+use AppBundle\Application\UseCase\Experience\CreateXpRequest;
+use AppBundle\Infrastructure\Persistence\Doctrine\DoctrineExperienceRepository;
 
 
 class ExperienceController extends AbstractController
@@ -22,7 +25,6 @@ class ExperienceController extends AbstractController
      */
     public function getXpAction()
     {
-
         // replace this example code with whatever you need
         return $this->render('Experience/index.html.twig');
     }
@@ -33,17 +35,26 @@ class ExperienceController extends AbstractController
      */
     public function postXpAction(Request $request)
     {
+        $CreateXpService = new CreateXpService(
+            $this->get('app.xprience_repository')       // for all technologies (e.g. MySQL, Redis, Elasticsearch)
+        );
 
-        if(!empty($request->request)){
-            $name   = $request->request->get('name');
-            $techno = $request->request->get('techno');
 
-            $experience = new CreateXp($name, $techno);
+        try {
+            $response = $CreateXpService->execute(
+                new CreateXpRequest(
+                    $request->request->get('name'),
+                    $request->request->get('description'),
+                    $request->request->get('technology'),
+                    $request->request->get('language')
+                )
+            );
+        } catch (ExperienceAlreadyExistsException $e) {
+            return $this->render('error.html.twig', $response);
         }
-        dump($request);
-
+        
         // replace this example code with whatever you need
-        return $this->render('Experience/post_xp.html.twig');
+        return $this->render('Experience/post_xp.html.twig', $response);
     }
 
     /**
