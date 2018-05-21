@@ -1,0 +1,29 @@
+App\Domain\Experience\Model\Xprience:
+    type: entity
+    table: experience
+    repositoryClass: App\Infrastructure\Persistence\Doctrine\DoctrineExperienceRepository
+    id:
+      uuid:
+        type: id
+        nullable: false
+
+    fields:
+      name:
+        type: string
+        length: 255
+        nullable: false
+
+      name:
+        type: description
+        length: 255
+        nullable: false  
+
+      technology:
+        type: description
+        length: 255
+        nullable: false 
+        
+      language:
+        type: description
+        length: 255
+        nullable: false     

@@ -17,4 +17,10 @@ class XprienceId extends AggregateRootId
      * @var string
      */
     protected $uuid;
+
+
+    public function __toString()
+	{
+		return $this->uuid;
+	}
 }

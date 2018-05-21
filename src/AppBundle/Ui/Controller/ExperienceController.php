@@ -36,7 +36,7 @@ class ExperienceController extends AbstractController
     public function postXpAction(Request $request)
     {
         $CreateXpService = new CreateXpService(
-            $this->get('app.xprience_repository')       // for all technologies (e.g. MySQL, Redis, Elasticsearch)
+            $this->get('app.xprience_doctrine_repository')       // for all technologies (e.g. MySQL, Redis, Elasticsearch)
         );
 
 
